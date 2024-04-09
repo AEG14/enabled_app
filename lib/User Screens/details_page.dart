@@ -24,16 +24,21 @@ class DetailsPage extends StatelessWidget {
               color: tOrange,
               child: Column(
                 children: [
-                  Container(
-                    height: SizeConfig.blockSizeVertical! * 50,
-                    decoration: BoxDecoration(
-                      color: tGrey3,
-                      // image: DecorationImage(
-                      //   image: AssetImage(enabledLocation.image),
-                      //   fit: BoxFit.cover,
-                      // ),
-                    ),
-                  ),
+                  enabledLocation['locationImage'] != null
+                      ? Image.network(
+                          enabledLocation['locationImage'],
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                        )
+                      : Image.asset(
+                          'assets/jollibeestore1.jpg',
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                        ),
                 ],
               ),
             ),

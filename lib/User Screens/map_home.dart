@@ -54,6 +54,7 @@ class _MapHomeState extends State<MapHome> {
                 // Hide any visible information when the map is tapped
                 // You can dismiss the dialog or bottom sheet here
               },
+              cloudMapId: '98480eb43e9d4bc7',
             ),
           ),
           Positioned(

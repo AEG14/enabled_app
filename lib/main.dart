@@ -24,6 +24,7 @@ Future main() async {
       appId: '1:964235381604:android:e5afe23fda86211dc18871',
       messagingSenderId: '964235381604',
       projectId: 'enabled---mobile-applica-f710b',
+      storageBucket: 'enabled---mobile-applica-f710b.appspot.com',
     ),
   );
 
