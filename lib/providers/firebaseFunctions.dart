@@ -10,6 +10,7 @@ class FirebaseService {
     required GeoPoint location,
     required List<String> accessibility,
     required double overallRating,
+    required String contactNumber,
   }) async {
     DocumentReference docRef = _firestore.collection('ENABLED_locations').doc();
     String locationID = docRef.id; // Generate locationID
@@ -20,6 +21,7 @@ class FirebaseService {
       'location': location,
       'accessibility': accessibility,
       'overallRating': overallRating,
+      'contactNumber': contactNumber,
     });
   }
 
@@ -31,6 +33,7 @@ class FirebaseService {
     required GeoPoint location,
     required List<String> accessibility,
     required double overallRating,
+    required String contactNumber,
   }) async {
     await _firestore.collection('ENABLED_locations').doc(locationID).update({
       'description': description,
@@ -38,6 +41,7 @@ class FirebaseService {
       'location': location,
       'accessibility': accessibility,
       'overallRating': overallRating,
+      'contactNumber': contactNumber,
     });
   }
 
