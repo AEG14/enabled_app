@@ -7,7 +7,7 @@ import '../providers/search_provider.dart';
 import '../widgets/searchbar.dart';
 import 'dart:math';
 import '../push_animation.dart';
-import 'restaurant_details.dart';
+import 'location_details.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
@@ -151,7 +151,7 @@ class _UserHomeState extends State<UserHome> {
         Navigator.push(
           context,
           PageRouteUtils.createSlidePageRoute(
-              RestaurantDetails(restaurant: item)),
+              LocationDetails(restaurant: item)),
         );
       },
       child: Container(
@@ -175,7 +175,7 @@ class _UserHomeState extends State<UserHome> {
         Navigator.push(
           context,
           PageRouteUtils.createSlidePageRoute(
-              RestaurantDetails(restaurant: item.restaurant)),
+              LocationDetails(restaurant: item.restaurant)),
         );
       },
       child: Container(
@@ -199,7 +199,7 @@ class _UserHomeState extends State<UserHome> {
         Navigator.push(
           context,
           PageRouteUtils.createSlidePageRoute(
-              RestaurantDetails(restaurant: item)),
+              LocationDetails(restaurant: item)),
         );
       },
       child: Padding(

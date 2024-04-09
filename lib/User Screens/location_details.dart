@@ -1,3 +1,5 @@
+import 'package:enabled_app/User%20Screens/leave_review.dart';
+import 'package:enabled_app/User%20Screens/view_reviews.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../app_styles.dart';
@@ -7,9 +9,9 @@ import '../push_animation.dart';
 // import 'navigation.dart';
 import 'dart:ui';
 
-class RestaurantDetails extends StatelessWidget {
+class LocationDetails extends StatelessWidget {
   final Restaurant restaurant;
-  RestaurantDetails({required this.restaurant});
+  LocationDetails({required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,34 @@ class RestaurantDetails extends StatelessWidget {
       body: Container(
         child: Stack(
           children: [
+            Container(
+              height: SizeConfig.blockSizeVertical! * 9,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigate to LeaveReviewScreen
+                      Navigator.push(
+                        context,
+                        PageRouteUtils.createSlidePageRoute(const LeaveReviewScreen()),
+                      );
+                    },
+                    child: Text('Leave Review'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteUtils.createSlidePageRoute(const ViewReviewsScreen()),
+                      );
+                    },
+                    child: Text('View Reviews'),
+                  ),
+                ],
+              ),
+            ),
             Container(
               color: tOrange,
               child: Column(
