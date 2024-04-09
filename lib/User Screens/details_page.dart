@@ -1,4 +1,5 @@
 import 'package:enabled_app/User%20Screens/map_page.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../app_styles.dart';
@@ -22,23 +23,48 @@ class EnabledLocationDetails extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              color: tOrange,
+              color: tWhite,
               child: Column(
                 children: [
                   enabledLocation['locationImage'] != null
-                      ? Image.network(
-                          enabledLocation['locationImage'],
-                          fit: BoxFit.cover,
-                          height: double.infinity,
-                          width: double.infinity,
-                          alignment: Alignment.center,
+                      ? FutureBuilder(
+                          future: FirebaseStorage.instance
+                              .ref(enabledLocation['locationImage'])
+                              .getDownloadURL(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Image.network(
+                                snapshot.data!,
+                                fit: BoxFit.cover,
+                                height: SizeConfig.blockSizeVertical! * 50,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                              );
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container(
+                                color: tWhite3,
+                                height: SizeConfig.blockSizeVertical! * 50,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        tBlack), // Set the color here
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                color: tGrey3,
+                                height: SizeConfig.blockSizeVertical! * 50,
+                              );
+                            }
+                          },
                         )
-                      : Image.asset(
-                          'assets/jollibeestore1.jpg',
-                          fit: BoxFit.cover,
-                          height: double.infinity,
-                          width: double.infinity,
-                          alignment: Alignment.center,
+                      : Container(
+                          color: tGrey3,
+                          height: SizeConfig.blockSizeVertical! * 50,
                         ),
                 ],
               ),
