@@ -130,23 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 )),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //         context,
-            //         PageRouteUtils.createSlidePageRoute(MapPage()),
-            //       );
-            //     },
-            //     child: Container(
-            //       child: Text(
-            //         'Go to Map Page',
-            //         style: GoogleFonts.poppins(
-            //           fontWeight: FontWeight.w600,
-            //           color: tBlack,
-            //           fontSize: 15,
-            //         ),
-            //       ),
-            //     )),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
