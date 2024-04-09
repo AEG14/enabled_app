@@ -32,7 +32,7 @@ class LocationDetails extends StatelessWidget {
                       // Navigate to LeaveReviewScreen
                       Navigator.push(
                         context,
-                        PageRouteUtils.createSlidePageRoute(const LeaveReviewScreen()),
+                        PageRouteUtils.createSlidePageRoute(LeaveReviewScreen()),
                       );
                     },
                     child: Text('Leave Review'),
@@ -41,7 +41,7 @@ class LocationDetails extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        PageRouteUtils.createSlidePageRoute(const ViewReviewsScreen()),
+                        PageRouteUtils.createSlidePageRoute(ViewReviewsScreen()),
                       );
                     },
                     child: Text('View Reviews'),
