@@ -74,21 +74,114 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // double latitude = 10.262360833907499;
-    // double longitude = 123.79918687941472;
+    // List<Map<String, dynamic>> locations = [
+    //   {
+    //     'name': 'Cebu Milktea Depot',
+    //     'description': 'Tea wholesaler',
+    //     'contactNumber': '',
+    //     'location': GeoPoint(10.287369757788667, 123.86039089751957),
+    //     'accessibility': [],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': '7-Eleven',
+    //     'description': 'Supermarket',
+    //     'contactNumber': '',
+    //     'location': GeoPoint(10.289986663196729, 123.85894347083034),
+    //     'accessibility': [
+    //       'Wheelchair accessible entrance',
+    //       'Wheelchair accessible parking lot'
+    //     ],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'New Apostolic Church',
+    //     'description': 'Apostolic church',
+    //     'contactNumber': '',
+    //     'location': GeoPoint(10.28642627690953, 123.85768386556002),
+    //     'accessibility': [],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'Jumalon Butterfly Sanctuary And Art Gallery',
+    //     'description': 'Art gallery',
+    //     'contactNumber': '0322616884',
+    //     'location': GeoPoint(10.290669786488776, 123.86448755148963),
+    //     'accessibility': [
+    //       'Wheelchair accessible entrance',
+    //       'Wheelchair accessible parking lot',
+    //       'Wheelchair accessible restroom'
+    //     ],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'San Jose Residences',
+    //     'description': 'Student dormitory',
+    //     'contactNumber': '',
+    //     'location': GeoPoint(10.291525910943857, 123.86061769950861),
+    //     'accessibility': [
+    //       'Wheelchair accessible entrance',
+    //       'Wheelchair accessible parking lot',
+    //       'Wheelchair accessible restroom'
+    //     ],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'Lance Computer Repair',
+    //     'description': 'Apartment building',
+    //     'contactNumber': '',
+    //     'location': GeoPoint(10.291293683975496, 123.85845047130336),
+    //     'accessibility': [
+    //       'Wheelchair accessible entrance',
+    //       'Wheelchair accessible parking lot'
+    //     ],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'Rainbow Connection Child Learning Center',
+    //     'description': 'School',
+    //     'contactNumber': '0323456972',
+    //     'location': GeoPoint(10.28642627690953, 123.85768386556002),
+    //     'accessibility': [
+    //       'Wheelchair accessible entrance',
+    //       'Wheelchair accessible parking lot'
+    //     ],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'James Fitness Gym',
+    //     'description': 'Fitness center',
+    //     'contactNumber': '',
+    //     'location': GeoPoint(10.291399066710365, 123.86806388615076),
+    //     'accessibility': [
+    //       'Wheelchair accessible entrance',
+    //       'Wheelchair accessible parking lot',
+    //       'Wheelchair accessible restroom'
+    //     ],
+    //     'overallRating': 4.0,
+    //   },
+    //   {
+    //     'name': 'RoadStar',
+    //     'description': 'Repair service',
+    //     'contactNumber': '0322380254',
+    //     'location': GeoPoint(10.28628596394535, 123.86154837238495),
+    //     'accessibility': ['Wheelchair accessible entrance'],
+    //     'overallRating': 4.0,
+    //   },
+    // ];
 
-    // firebaseService.createLocation(
-    //   description: 'Tubod Flowing Water Resort',
-    //   name: 'Tubod',
-    //   location: GeoPoint(latitude, longitude),
-    //   accessibility: [
-    //     'Wheelchair ramps',
-    //     'Visual Signage',
-    //     'ASL trained staff',
-    //     'Available Kiosk'
-    //   ],
-    //   overallRating: 4.0,
-    // );
+    // for (var location in locations) {
+    //   List<String> accessibilityList =
+    //       List<String>.from(location['accessibility']);
+    //   firebaseService.createLocation(
+    //     name: location['name'],
+    //     description: location['description'],
+    //     contactNumber: location['contactNumber'],
+    //     location: location['location'],
+    //     accessibility: accessibilityList,
+    //     overallRating: location['overallRating'],
+    //   );
+    // }
   }
 
   @override
