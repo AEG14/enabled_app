@@ -38,6 +38,7 @@ Future main() async {
       ],
       child: MaterialApp(
         home: MyApp(),
+        debugShowCheckedModeBanner: false,
       ),
     ),
   );
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Demo Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

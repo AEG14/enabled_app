@@ -28,11 +28,28 @@ class _MapHomeState extends State<MapHome> {
   List<DocumentSnapshot> _enabledLocations = [];
   bool _initialCameraMoved = false;
 
+  bool _showAccessible = true;
+  bool _showPartiallyAccessible = true;
+  bool _showNotAccessible = true;
+
+  bool _tempShowAccessible = true;
+  bool _tempShowPartiallyAccessible = true;
+  bool _tempShowNotAccessible = true;
+
+  late StreamSubscription<LocationData> _locationSubscription;
+
   @override
   void initState() {
     super.initState();
+    _requestLocationPermission();
     _getLocationUpdates();
     _getEnabledLocations();
+  }
+
+  @override
+  void dispose() {
+    _locationSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -54,7 +71,7 @@ class _MapHomeState extends State<MapHome> {
                 // Hide any visible information when the map is tapped
                 // You can dismiss the dialog or bottom sheet here
               },
-              cloudMapId: '98480eb43e9d4bc7',
+              mapType: MapType.normal,
             ),
           ),
           Positioned(
@@ -63,6 +80,19 @@ class _MapHomeState extends State<MapHome> {
             right: 20.0,
             child: SearchBarWidget(
               onClear: () {},
+            ),
+          ),
+          Positioned(
+            top: 80.0,
+            left: 20.0,
+            child: ElevatedButton(
+              onPressed: () {
+                _showFilterDialog();
+              },
+              child: Text(
+                'Filter',
+                style: tPoppinsMedium.copyWith(color: tPaleBlue),
+              ),
             ),
           ),
         ],
@@ -88,15 +118,32 @@ class _MapHomeState extends State<MapHome> {
     }
   }
 
+  void _requestLocationPermission() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await _locationController.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await _locationController.requestService();
+    }
+
+    _permissionGranted = await _locationController.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _locationController.requestPermission();
+    }
+  }
+
   void _getLocationUpdates() {
-    _locationController.onLocationChanged
+    _locationSubscription = _locationController.onLocationChanged
         .listen((LocationData currentLocation) {
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
-        setState(() {
-          _currentPosition =
-              LatLng(currentLocation.latitude!, currentLocation.longitude!);
-        });
+        if (mounted) {
+          setState(() {
+            _currentPosition =
+                LatLng(currentLocation.latitude!, currentLocation.longitude!);
+          });
+        }
       }
     });
   }
@@ -110,9 +157,11 @@ class _MapHomeState extends State<MapHome> {
 
   void _getEnabledLocations() {
     _firestore.collection('ENABLED_locations').get().then((snapshot) {
-      setState(() {
-        _enabledLocations = snapshot.docs;
-      });
+      if (mounted) {
+        setState(() {
+          _enabledLocations = snapshot.docs;
+        });
+      }
     });
   }
 
@@ -121,29 +170,47 @@ class _MapHomeState extends State<MapHome> {
 
     // Add markers for ENABLED_locations
     _enabledLocations.forEach((doc) {
-      String accessibilityText = '';
+      int accessibilityCount = doc['accessibility'].length;
       GeoPoint location = doc['location'];
       double latitude = location.latitude;
       double longitude = location.longitude;
-      markers.add(
-        Marker(
-          markerId: MarkerId(doc.id),
-          position: LatLng(latitude, longitude),
-          icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          infoWindow: InfoWindow(
-            title: doc['name'],
-            snippet: 'View Accessibilities',
-            onTap: () {
-              Navigator.push(
-                context,
-                PageRouteUtils.createSlidePageRoute(
-                    EnabledLocationDetails(enabledLocation: doc)),
-              );
-            },
+
+      if (_showAccessible && accessibilityCount >= 3 ||
+          _showPartiallyAccessible &&
+              accessibilityCount >= 1 &&
+              accessibilityCount <= 2 ||
+          _showNotAccessible && accessibilityCount == 0) {
+        BitmapDescriptor markerIcon;
+        if (accessibilityCount == 0) {
+          markerIcon =
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed);
+        } else if (accessibilityCount <= 2) {
+          markerIcon =
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow);
+        } else {
+          markerIcon =
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+        }
+
+        markers.add(
+          Marker(
+            markerId: MarkerId(doc.id),
+            position: LatLng(latitude, longitude),
+            icon: markerIcon,
+            infoWindow: InfoWindow(
+              title: doc['name'],
+              snippet: 'View Accessibilities',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteUtils.createSlidePageRoute(
+                      EnabledLocationDetails(enabledLocation: doc)),
+                );
+              },
+            ),
           ),
-        ),
-      );
+        );
+      }
     });
 
     // Add marker for current location
@@ -163,5 +230,97 @@ class _MapHomeState extends State<MapHome> {
     }
 
     return markers;
+  }
+
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Filter',
+                style: tPoppinsBold.copyWith(color: tBlack),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CheckboxListTile(
+                    activeColor: Colors.green,
+                    title: Text(
+                      'Accessible (Green)',
+                      style: tPoppinsMedium.copyWith(color: tBlack),
+                    ),
+                    value: _tempShowAccessible,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _tempShowAccessible = value ?? false;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    activeColor: Color(0xffFFC000),
+                    title: Text(
+                      'Partially Accessible (Yellow)',
+                      style: tPoppinsMedium.copyWith(color: tBlack),
+                    ),
+                    value: _tempShowPartiallyAccessible,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _tempShowPartiallyAccessible = value ?? false;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    activeColor: Color(0xffC30010),
+                    title: Text(
+                      'Not Accessible (Red)',
+                      style: tPoppinsMedium.copyWith(color: tBlack),
+                    ),
+                    value: _tempShowNotAccessible,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _tempShowNotAccessible = value ?? false;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Close',
+                    style: tPoppinsMedium.copyWith(color: tBlack),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _showAccessible = _tempShowAccessible;
+                      _showPartiallyAccessible = _tempShowPartiallyAccessible;
+                      _showNotAccessible = _tempShowNotAccessible;
+                    });
+                    _getEnabledLocations(); // Apply changes to map
+                    Navigator.of(context).pop(); // Close dialog
+                  },
+                  child: Text(
+                    'Save',
+                    style: tPoppinsBold.copyWith(color: tWhite),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
