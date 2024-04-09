@@ -37,6 +37,7 @@ Future main() async {
       ],
       child: MaterialApp(
         home: MyApp(),
+        debugShowCheckedModeBanner: false,
       ),
     ),
   );

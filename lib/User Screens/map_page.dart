@@ -38,13 +38,16 @@ class _MapPageState extends State<MapPage> {
       widget.enabledLocation['location'].latitude,
       widget.enabledLocation['location'].longitude,
     );
+    _requestLocationPermission();
     getLocationUpdates();
     loadCustomIcon();
   }
 
   @override
   void dispose() {
-    _locationSubscription.cancel();
+    if (_locationSubscription != null) {
+      _locationSubscription.cancel();
+    }
     super.dispose();
   }
 
@@ -110,6 +113,23 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> getLocationUpdates() async {
+    _locationSubscription = _locationController.onLocationChanged
+        .listen((LocationData currentLocation) {
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        if (mounted) {
+          setState(() {
+            _currentPosition =
+                LatLng(currentLocation.latitude!, currentLocation.longitude!);
+          });
+          _cameraToPosition(_currentPosition!);
+          getPolylinePoints();
+        }
+      }
+    });
+  }
+
+  void _requestLocationPermission() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
 
@@ -122,19 +142,6 @@ class _MapPageState extends State<MapPage> {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _locationController.requestPermission();
     }
-
-    _locationSubscription = _locationController.onLocationChanged
-        .listen((LocationData currentLocation) {
-      if (currentLocation.latitude != null &&
-          currentLocation.longitude != null) {
-        setState(() {
-          _currentPosition =
-              LatLng(currentLocation.latitude!, currentLocation.longitude!);
-        });
-        _cameraToPosition(_currentPosition!);
-        getPolylinePoints();
-      }
-    });
   }
 
   Future<void> getPolylinePoints() async {
@@ -164,7 +171,7 @@ class _MapPageState extends State<MapPage> {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
       polylineId: id,
-      color: tBlue,
+      color: Colors.blue,
       points: polylineCoordinates,
       width: 8,
     );
