@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:enabled_app/app_styles.dart';
 import 'package:enabled_app/widgets/searchBarCard.dart';
 import 'package:enabled_app/providers/firebaseFunctions.dart';
 import '../consts.dart';
@@ -9,7 +10,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
+  final DocumentSnapshot enabledLocation;
+  const MapPage({Key? key, required this.enabledLocation}) : super(key: key);
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -17,25 +19,29 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   Location _locationController = Location();
-
   final Completer<GoogleMapController> _mapController =
       Completer<GoogleMapController>();
 
-  static LatLng _AABBQ = LatLng(10.249182047506414, 123.80327467691305);
-  static LatLng _MyHouse = LatLng(10.250399, 123.803627);
-  LatLng? _currentPosition = null;
+  LatLng? _currentPosition;
+  late LatLng _destinationPosition;
 
   Map<PolylineId, Polyline> polylines = {};
+  late StreamSubscription<LocationData> _locationSubscription;
 
   @override
   void initState() {
     super.initState();
+    _destinationPosition = LatLng(
+      widget.enabledLocation['location'].latitude,
+      widget.enabledLocation['location'].longitude,
+    );
+    getLocationUpdates();
+  }
 
-    getLocationUpdates().then((_) => {
-          getPolylinePoints().then((coordinates) {
-            generatePolyLineFromPoints(coordinates);
-          }),
-        });
+  @override
+  void dispose() {
+    _locationSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -49,20 +55,20 @@ class _MapPageState extends State<MapPage> {
             child: GoogleMap(
               onMapCreated: ((GoogleMapController controller) =>
                   _mapController.complete(controller)),
-              initialCameraPosition: CameraPosition(target: _MyHouse, zoom: 13),
+              initialCameraPosition:
+                  CameraPosition(target: _destinationPosition, zoom: 13),
               markers: {
-                Marker(
+                if (_currentPosition != null)
+                  Marker(
                     markerId: MarkerId("_currentLocation"),
                     icon: BitmapDescriptor.defaultMarker,
-                    position: _currentPosition ?? _MyHouse),
+                    position: _currentPosition!,
+                  ),
                 Marker(
-                    markerId: MarkerId("_sourceLocation"),
-                    icon: BitmapDescriptor.defaultMarker,
-                    position: _MyHouse),
-                Marker(
-                    markerId: MarkerId("_destinationLocation"),
-                    icon: BitmapDescriptor.defaultMarker,
-                    position: _AABBQ)
+                  markerId: MarkerId("_destinationLocation"),
+                  icon: BitmapDescriptor.defaultMarker,
+                  position: _destinationPosition,
+                )
               },
               polylines: Set<Polyline>.of(polylines.values),
               cloudMapId: '98480eb43e9d4bc7',
@@ -103,7 +109,7 @@ class _MapPageState extends State<MapPage> {
       _permissionGranted = await _locationController.requestPermission();
     }
 
-    _locationController.onLocationChanged
+    _locationSubscription = _locationController.onLocationChanged
         .listen((LocationData currentLocation) {
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
@@ -112,17 +118,21 @@ class _MapPageState extends State<MapPage> {
               LatLng(currentLocation.latitude!, currentLocation.longitude!);
         });
         _cameraToPosition(_currentPosition!);
+        getPolylinePoints();
       }
     });
   }
 
-  Future<List<LatLng>> getPolylinePoints() async {
+  Future<void> getPolylinePoints() async {
+    if (_currentPosition == null || _destinationPosition == null) return;
+
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       GOOGLE_MAPS_API_KEY,
-      PointLatLng(_MyHouse.latitude, _MyHouse.longitude),
-      PointLatLng(_AABBQ.latitude, _AABBQ.longitude),
+      PointLatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+      PointLatLng(
+          _destinationPosition.latitude, _destinationPosition.longitude),
       travelMode: TravelMode.driving,
     );
     if (result.points.isNotEmpty) {
@@ -133,16 +143,17 @@ class _MapPageState extends State<MapPage> {
       print(result.errorMessage);
     }
 
-    return polylineCoordinates;
+    generatePolyLineFromPoints(polylineCoordinates);
   }
 
-  void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
+  void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
-        polylineId: id,
-        color: Colors.green,
-        points: polylineCoordinates,
-        width: 8);
+      polylineId: id,
+      color: tBlue,
+      points: polylineCoordinates,
+      width: 8,
+    );
     setState(() {
       polylines[id] = polyline;
     });
