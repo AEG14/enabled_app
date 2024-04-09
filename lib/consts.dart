@@ -1,5 +1,20 @@
 const String GOOGLE_MAPS_API_KEY = 'AIzaSyB7yQz_7PZnwN1PRyDuvfq0oMuZ_qryVSE';
 
+class PlaceAutocomplete {
+  final String description;
+  final String placeId;
+
+  PlaceAutocomplete({
+    required this.description,
+    required this.placeId,
+  });
+
+  factory PlaceAutocomplete.fromJson(Map<String, dynamic> json) {
+    return PlaceAutocomplete(
+        description: json['description'], placeId: json['place_id']);
+  }
+}
+
 class Food {
   final String variety;
   final String name;
