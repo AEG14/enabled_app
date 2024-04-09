@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../push_animation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class MapHome extends StatefulWidget {
   const MapHome({Key? key}) : super(key: key);
@@ -147,13 +148,18 @@ class _MapHomeState extends State<MapHome> {
 
     // Add marker for current location
     if (_currentPosition != null) {
-      markers.add(
-        Marker(
-          markerId: MarkerId('currentLocation'),
-          position: _currentPosition!,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-        ),
-      );
+      BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(48, 48)),
+        "assets/images/accessible.png",
+      ).then((descriptor) {
+        markers.add(
+          Marker(
+            markerId: MarkerId('currentLocation'),
+            position: _currentPosition!,
+            icon: descriptor,
+          ),
+        );
+      });
     }
 
     return markers;

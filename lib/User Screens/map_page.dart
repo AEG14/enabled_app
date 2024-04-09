@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class MapPage extends StatefulWidget {
   final DocumentSnapshot enabledLocation;
@@ -28,6 +29,8 @@ class _MapPageState extends State<MapPage> {
   Map<PolylineId, Polyline> polylines = {};
   late StreamSubscription<LocationData> _locationSubscription;
 
+  late BitmapDescriptor customIcon;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +39,7 @@ class _MapPageState extends State<MapPage> {
       widget.enabledLocation['location'].longitude,
     );
     getLocationUpdates();
+    loadCustomIcon();
   }
 
   @override
@@ -61,7 +65,9 @@ class _MapPageState extends State<MapPage> {
                 if (_currentPosition != null)
                   Marker(
                     markerId: MarkerId("_currentLocation"),
-                    icon: BitmapDescriptor.defaultMarker,
+                    icon: customIcon != null
+                        ? customIcon
+                        : BitmapDescriptor.defaultMarker,
                     position: _currentPosition!,
                   ),
                 Marker(
@@ -85,6 +91,14 @@ class _MapPageState extends State<MapPage> {
         ],
       ),
     );
+  }
+
+  Future<void> loadCustomIcon() async {
+    customIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(size: Size(48, 48)), // Adjust size as needed
+      "assets/images/accessible_forward.png",
+    );
+    setState(() {}); // trigger a rebuild after loading the custom icon
   }
 
   Future<void> _cameraToPosition(LatLng pos) async {
