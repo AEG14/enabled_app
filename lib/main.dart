@@ -1,3 +1,4 @@
+import 'package:enabled_app/User%20Screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -178,6 +179,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   child: Text(
                     'Add a Review Page',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: tBlack,
+                      fontSize: 15,
+                    ),
+                  ),
+                )),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteUtils.createSlidePageRoute(SplashScreen()),
+                  );
+                },
+                child: Container(
+                  child: Text(
+                    'Splash Screen',
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       color: tBlack,
