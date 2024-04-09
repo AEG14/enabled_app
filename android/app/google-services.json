@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "964235381604",
+    "project_id": "enabled---mobile-applica-f710b",
+    "storage_bucket": "enabled---mobile-applica-f710b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964235381604:android:e5afe23fda86211dc18871",
+        "android_client_info": {
+          "package_name": "com.example.enabled_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqauAJdD-kEg00hJo8Oz8-NxGZLuNkO90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
