@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../push_animation.dart';
 
 class MapHome extends StatefulWidget {
@@ -54,6 +53,7 @@ class _MapHomeState extends State<MapHome> {
                 // Hide any visible information when the map is tapped
                 // You can dismiss the dialog or bottom sheet here
               },
+              cloudMapId: '98480eb43e9d4bc7',
             ),
           ),
           Positioned(
@@ -137,7 +137,7 @@ class _MapHomeState extends State<MapHome> {
               Navigator.push(
                 context,
                 PageRouteUtils.createSlidePageRoute(
-                    DetailsPage(enabledLocation: doc)),
+                    EnabledLocationDetails(enabledLocation: doc)),
               );
             },
           ),
