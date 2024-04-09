@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:enabled_app/widgets/searchBarCard.dart';
+import 'package:enabled_app/providers/firebaseFunctions.dart';
 import '../consts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+
     getLocationUpdates().then((_) => {
           getPolylinePoints().then((coordinates) {
             generatePolyLineFromPoints(coordinates);

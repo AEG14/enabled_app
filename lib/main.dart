@@ -3,11 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:enabled_app/providers/search_provider.dart';
 import 'package:provider/provider.dart';
+import 'User Screens/map_home.dart';
 import 'User Screens/map_page.dart';
 import 'User Screens/user_home.dart';
 import 'app_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../push_animation.dart';
+import 'package:enabled_app/providers/firebaseFunctions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:riverpod/riverpod.dart';
 
 import 'providers/cart_provider.dart';
@@ -62,11 +65,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final FirebaseService firebaseService = FirebaseService();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    // double latitude = 10.262360833907499;
+    // double longitude = 123.79918687941472;
+
+    // firebaseService.createLocation(
+    //   description: 'Tubod Flowing Water Resort',
+    //   name: 'Tubod',
+    //   location: GeoPoint(latitude, longitude),
+    //   accessibility: [
+    //     'Wheelchair ramps',
+    //     'Visual Signage',
+    //     'ASL trained staff',
+    //     'Available Kiosk'
+    //   ],
+    //   overallRating: 4.0,
+    // );
   }
 
   @override
@@ -84,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
-                color: tBlack, // Assuming tWhite is equivalent to Colors.white
+                color: tBlack,
                 fontSize: 15,
               ),
             ),
@@ -126,11 +144,30 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 )),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteUtils.createSlidePageRoute(MapHome()),
+                  );
+                },
+                child: Container(
+                  child: Text(
+                    'Go to Map Home',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: tBlack,
+                      fontSize: 15,
+                    ),
+                  ),
+                )),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          //
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
