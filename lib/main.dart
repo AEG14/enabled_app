@@ -9,6 +9,8 @@ import 'User Screens/enabled_location_details.dart';
 import 'User Screens/map_home.dart';
 import 'User Screens/map_page.dart';
 import 'User Screens/user_home.dart';
+import 'User Screens/view_reviews.dart';
+import 'User Screens/leave_review.dart';
 import 'app_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../push_animation.dart';
