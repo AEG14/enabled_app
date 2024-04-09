@@ -72,6 +72,7 @@ class _MapHomeState extends State<MapHome> {
                 // You can dismiss the dialog or bottom sheet here
               },
               mapType: MapType.normal,
+              cloudMapId: '98480eb43e9d4bc7',
             ),
           ),
           Positioned(
