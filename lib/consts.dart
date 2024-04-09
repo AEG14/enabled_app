@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 const String GOOGLE_MAPS_API_KEY = 'AIzaSyB7yQz_7PZnwN1PRyDuvfq0oMuZ_qryVSE';
 
 class PlaceAutocomplete {
@@ -13,6 +15,24 @@ class PlaceAutocomplete {
     return PlaceAutocomplete(
         description: json['description'], placeId: json['place_id']);
   }
+}
+
+class EnabledLocation {
+  final String locationID;
+  final String name;
+  final String description;
+  final GeoPoint location;
+  final List<String> accessibility;
+  final double overallRating;
+
+  EnabledLocation({
+    required this.locationID,
+    required this.name,
+    required this.description,
+    required this.location,
+    required this.accessibility,
+    required this.overallRating,
+  });
 }
 
 class Food {

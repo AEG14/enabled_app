@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:enabled_app/User%20Screens/details_page.dart';
 import 'package:enabled_app/app_styles.dart';
 import 'package:enabled_app/widgets/searchBarCard.dart';
 import 'package:enabled_app/providers/firebaseFunctions.dart';
@@ -133,10 +134,11 @@ class _MapHomeState extends State<MapHome> {
             title: doc['name'],
             snippet: 'View Accessibilities',
             onTap: () {
-              //  Navigator.push(
-              //       context,
-              //       PageRouteUtils.createSlidePageRoute(UserHome()),
-              //     );
+              Navigator.push(
+                context,
+                PageRouteUtils.createSlidePageRoute(
+                    DetailsPage(enabledLocation: doc)),
+              );
             },
           ),
         ),
