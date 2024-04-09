@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:enabled_app/providers/search_provider.dart';
 import 'package:provider/provider.dart';
+import 'User Screens/enabled_location_details.dart';
 import 'User Screens/map_home.dart';
 import 'User Screens/map_page.dart';
 import 'User Screens/user_home.dart';
@@ -34,7 +35,9 @@ Future main() async {
         ),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
       ],
-      child: const MyApp(),
+      child: MaterialApp(
+        home: MyApp(),
+      ),
     ),
   );
 }
