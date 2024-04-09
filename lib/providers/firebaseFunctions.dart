@@ -106,4 +106,84 @@ class FirebaseService {
         .doc(reviewID)
         .delete();
   }
+
+  // Create a new user
+  Future<void> createUser({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phoneNumber,
+    required String profilePicture,
+    required String password,
+  }) async {
+    DocumentReference docRef =
+        _firestore.collection('ENABLED_ENABLED_users').doc();
+    String userId = docRef.id; // Generate userId
+    await docRef.set({
+      'userId': userId, // Set userId
+      'username': username,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'profilePicture': profilePicture,
+      'password': password,
+    });
+  }
+
+  // Update an existing user
+  Future<void> updateUser({
+    required String userId,
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phoneNumber,
+    required String profilePicture,
+    required String password,
+  }) async {
+    await _firestore.collection('ENABLED_users').doc(userId).update({
+      'username': username,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'profilePicture': profilePicture,
+      'password': password,
+    });
+  }
+
+  // Delete an existing user
+  Future<void> deleteUser(String userId) async {
+    await _firestore.collection('ENABLED_users').doc(userId).delete();
+  }
+
+  // Get all ENABLED_users
+  Stream<QuerySnapshot> getAllENABLED_users() {
+    return _firestore.collection('ENABLED_users').snapshots();
+  }
+
+  // Get a specific user by userId
+  Future<DocumentSnapshot> getUserById(String userId) {
+    return _firestore.collection('ENABLED_users').doc(userId).get();
+  }
+}
+
+class ENABLED_userservice {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<Map<String, dynamic>> getUserDetails(String userId) async {
+    try {
+      DocumentSnapshot snapshot =
+          await _firestore.collection('ENABLED_users').doc(userId).get();
+      if (snapshot.exists) {
+        return snapshot.data() as Map<String, dynamic>;
+      } else {
+        throw 'User not found';
+      }
+    } catch (e) {
+      throw 'Error getting user details: $e';
+    }
+  }
 }

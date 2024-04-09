@@ -103,8 +103,11 @@ class _MapHomeState extends State<MapHome> {
             _cameraToPosition(_currentPosition!);
           }
         },
-        child: Icon(Icons.my_location),
-        backgroundColor: tPaleBlue,
+        child: Icon(
+          Icons.my_location,
+          color: tWhite,
+        ),
+        backgroundColor: Color(0xff169d53),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

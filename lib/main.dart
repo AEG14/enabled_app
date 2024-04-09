@@ -1,3 +1,5 @@
+import 'package:enabled_app/User%20Screens/privacy-statement.dart';
+import 'package:enabled_app/User%20Screens/profile_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,17 @@ Future main() async {
       projectId: 'enabled---mobile-applica-f710b',
     ),
   );
+  // final firebaseService = FirebaseService();
+
+  // firebaseService.createUser(
+  //   username: 'HarleyEms',
+  //   firstName: 'Harley',
+  //   lastName: 'Mamalias',
+  //   email: 'Harley@example.com',
+  //   phoneNumber: '+1234567890',
+  //   profilePicture: 'profilePictures/harls.jpg',
+  //   password: 'password123',
+  // );
 
   runApp(
     MultiProvider(
@@ -43,9 +56,19 @@ Future main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,96 +92,45 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  final FirebaseService firebaseService = FirebaseService();
+  int _currentIndex = 1;
 
-  @override
-  void initState() {
-    super.initState();
-    // double latitude = 10.262360833907499;
-    // double longitude = 123.79918687941472;
-
-    // firebaseService.createLocation(
-    //   description: 'Tubod Flowing Water Resort',
-    //   name: 'Tubod',
-    //   location: GeoPoint(latitude, longitude),
-    //   accessibility: [
-    //     'Wheelchair ramps',
-    //     'Visual Signage',
-    //     'ASL trained staff',
-    //     'Available Kiosk'
-    //   ],
-    //   overallRating: 4.0,
-    // );
-  }
-
+  final List<Widget> _pages = [
+    ProfilePage(userId: "kLWRVGRSwIBGE8naaBdC"), // Placeholder for Profile
+    MapHome(),
+    PrivacyStatementPage(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w600,
-                color: tBlack,
-                fontSize: 15,
-              ),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteUtils.createSlidePageRoute(UserHome()),
-                  );
-                },
-                child: Container(
-                  child: Text(
-                    'Go to Home Page',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600,
-                      color: tBlack,
-                      fontSize: 15,
-                    ),
-                  ),
-                )),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteUtils.createSlidePageRoute(MapHome()),
-                  );
-                },
-                child: Container(
-                  child: Text(
-                    'Go to Map Home',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600,
-                      color: tBlack,
-                      fontSize: 15,
-                    ),
-                  ),
-                )),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'Info',
+          ),
+        ],
+        currentIndex: _currentIndex,
+        selectedItemColor: Color(0xff169d53),
+        unselectedItemColor: tGrey3,
+        unselectedLabelStyle: tPoppinsRegular.copyWith(color: tGrey3),
+        showUnselectedLabels: true,
+        onTap: _onItemTapped,
       ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }
