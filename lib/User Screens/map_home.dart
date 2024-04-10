@@ -92,7 +92,7 @@ class _MapHomeState extends State<MapHome> {
               },
               child: Text(
                 'Filter',
-                style: tPoppinsMedium.copyWith(color: tPaleBlue),
+                style: tPoppinsMedium.copyWith(color: tBlack3),
               ),
             ),
           ),

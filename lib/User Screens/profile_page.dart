@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import '../app_styles.dart';
 import '../main.dart';
 import '../push_animation.dart';
-import '../size_config.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:enabled_app/providers/firebaseFunctions.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -40,7 +36,12 @@ class ProfilePage extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text('Profile'),
+            title: Text(
+              'Profile',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -58,7 +59,214 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(10.0),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 50.0,
+                              backgroundImage: AssetImage(
+                                'assets/images/user1.jpg',
+                              ),
+                            ),
+                            SizedBox(height: 10.0),
+                            Text(
+                              'Harley Mamalias',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Profile Information',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Username',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${userDetails['username']}',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Name',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              '${userDetails['firstName']} ${userDetails['lastName']}',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Personal Information',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'User ID',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '096237',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Email',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              '${userDetails['email']}',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Phone Number',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              '${userDetails['phoneNumber']}',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Gender',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'Male',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Date of Birth',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              '02 Feb, 1994',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Address',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'City of Naga',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
                   // Center(
                   //   child: userDetails['profilePicture'] != null
                   //       ? FutureBuilder<String>(
@@ -108,31 +316,7 @@ class ProfilePage extends StatelessWidget {
                   //           color: tGrey3,
                   //         ),
                   // ),
-                  SizedBox(height: 20.0),
-                  Text(
-                    'Username: ${userDetails['username']}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'First Name: ${userDetails['firstName']}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'Last Name: ${userDetails['lastName']}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'Email: ${userDetails['email']}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'Phone Number: ${userDetails['phoneNumber']}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
+                  Divider(),  
                 ],
               ),
             ),
