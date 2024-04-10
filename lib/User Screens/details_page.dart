@@ -360,12 +360,14 @@ class EnabledLocationDetails extends StatelessWidget {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          // Handle View Reviews action
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //       builder: (context) => ReviewsPage()), // Navigate to ReviewsPage
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            PageRouteUtils.createSlidePageRoute(
+                                              ViewReviewsScreen(
+                                                  enabledLocation:
+                                                      enabledLocation),
+                                            ),
+                                          );
                                         },
                                         child: Row(
                                           children: [
