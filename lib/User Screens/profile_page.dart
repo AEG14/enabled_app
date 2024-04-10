@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../app_styles.dart';
+import '../main.dart';
+import '../push_animation.dart';
 import '../size_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -39,6 +41,16 @@ class ProfilePage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('Profile'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageRouteUtils.createSlidePageRoute(
+                      MyHomePage(title: 'ENABLED')),
+                );
+              },
+            ),
           ),
           body: SingleChildScrollView(
             child: Padding(

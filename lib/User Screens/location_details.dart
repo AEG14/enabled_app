@@ -30,22 +30,23 @@ class LocationDetails extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       // Navigate to LeaveReviewScreen
-                      Navigator.push(
-                        context,
-                        PageRouteUtils.createSlidePageRoute(LeaveReviewScreen()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   PageRouteUtils.createSlidePageRoute(
+                      //       LeaveReviewScreen()),
+                      // );
                     },
                     child: Text('Leave Review'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageRouteUtils.createSlidePageRoute(ViewReviewsScreen()),
-                      );
-                    },
-                    child: Text('View Reviews'),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       PageRouteUtils.createSlidePageRoute(ViewReviewsScreen()),
+                  //     );
+                  //   },
+                  //   child: Text('View Reviews'),
+                  // ),
                 ],
               ),
             ),

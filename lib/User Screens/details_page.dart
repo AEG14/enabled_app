@@ -1,10 +1,12 @@
 import 'package:enabled_app/User%20Screens/map_page.dart';
+import 'package:enabled_app/User%20Screens/view_reviews.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../app_styles.dart';
 import '../consts.dart';
+import '../main.dart';
 import '../size_config.dart';
 import '../push_animation.dart';
 // import 'navigation.dart';
@@ -76,10 +78,10 @@ class EnabledLocationDetails extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2), // Shadow color
-                    spreadRadius: 2, // Spread radius
-                    blurRadius: 5, // Blur radius
-                    offset: Offset(0, 3), // Offset in the x, y direction
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -87,7 +89,11 @@ class EnabledLocationDetails extends StatelessWidget {
                 icon: Icon(Icons.arrow_back_ios_new_rounded),
                 color: tWhite,
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    PageRouteUtils.createSlidePageRoute(
+                        MyHomePage(title: 'ENABLED')),
+                  );
                 },
               ),
             ),
@@ -239,14 +245,13 @@ class EnabledLocationDetails extends StatelessWidget {
                                 enabledLocation['name'],
                                 maxLines: 3,
                                 style: tPoppinsBold.copyWith(
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal! * 5,
+                                  fontSize: SizeConfig.blockSizeHorizontal! * 5,
                                   color: tBlack3,
                                 ),
                               ),
                               SizedBox(
                                 height: 10,
-                              ), 
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -291,12 +296,13 @@ class EnabledLocationDetails extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      // Handle View Reviews action
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) => ReviewsPage()), // Navigate to ReviewsPage
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        PageRouteUtils.createSlidePageRoute(
+                                          ViewReviewsScreen(
+                                              enabledLocation: enabledLocation),
+                                        ),
+                                      );
                                     },
                                     child: Text(
                                       'Reviews',
@@ -304,8 +310,7 @@ class EnabledLocationDetails extends StatelessWidget {
                                         fontSize:
                                             SizeConfig.blockSizeHorizontal! *
                                                 4.5,
-                                        color: Colors
-                                            .blue, 
+                                        color: Colors.blue,
                                       ),
                                     ),
                                   ),

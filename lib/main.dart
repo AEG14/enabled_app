@@ -17,8 +17,8 @@ import '../push_animation.dart';
 import 'package:enabled_app/providers/firebaseFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:riverpod/riverpod.dart';
-
 import 'providers/cart_provider.dart';
+import 'User Screens/splash_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Demo Home Page'),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 1;
 
   final List<Widget> _pages = [
-    ProfilePage(userId: "kLWRVGRSwIBGE8naaBdC"), // Placeholder for Profile
+    ProfilePage(userId: "kLWRVGRSwIBGE8naaBdC"),
     MapHome(),
     PrivacyStatementPage(),
   ];

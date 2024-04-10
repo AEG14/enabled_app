@@ -1,6 +1,8 @@
+import 'package:enabled_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../app_styles.dart';
 import '../../size_config.dart';
+import '../push_animation.dart';
 
 class PrivacyStatementPage extends StatelessWidget {
   @override
@@ -35,7 +37,11 @@ class PrivacyStatementPage extends StatelessWidget {
                       height: SizeConfig.blockSizeVertical! * 7.5,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            PageRouteUtils.createSlidePageRoute(
+                                MyHomePage(title: 'ENABLED')),
+                          );
                         },
                         child: Align(
                           alignment: Alignment.center,
