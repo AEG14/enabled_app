@@ -5,17 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:enabled_app/providers/search_provider.dart';
 import 'package:provider/provider.dart';
-import 'User Screens/enabled_location_details.dart';
 import 'User Screens/map_home.dart';
-import 'User Screens/map_page.dart';
-import 'User Screens/user_home.dart';
-import 'User Screens/view_reviews.dart';
-import 'User Screens/leave_review.dart';
 import 'app_styles.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../push_animation.dart';
-import 'package:enabled_app/providers/firebaseFunctions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 // import 'package:riverpod/riverpod.dart';
 import 'providers/cart_provider.dart';
 import 'User Screens/splash_screen.dart';

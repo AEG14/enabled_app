@@ -75,19 +75,10 @@ class EnabledLocationDetails extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(10, 28, 10, 16),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
+              decoration: BoxDecoration(),
               child: IconButton(
                 icon: Icon(Icons.arrow_back_ios_new_rounded),
-                color: tWhite,
+                color: tBlack3,
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -111,96 +102,167 @@ class EnabledLocationDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: SizeConfig.blockSizeVertical! * 7,
+                        height: SizeConfig.blockSizeVertical! * 3,
                       ),
-                      Container(
-                        height: SizeConfig.blockSizeVertical! * 39,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(30, 17.3, 21.89, 4),
-                              child: Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Description: ',
-                                        style: tPoppinsBold.copyWith(
-                                          color: tBlack4,
-                                          fontSize:
-                                              SizeConfig.blockSizeHorizontal! *
-                                                  3.5,
-                                        ),
-                                      ),
-                                      Text(
-                                        enabledLocation['description'],
-                                        style: tPoppinsRegular.copyWith(
-                                          color: tBlack4,
-                                          fontSize:
-                                              SizeConfig.blockSizeHorizontal! *
-                                                  3.5,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  21.89, 17.3, 21.89, 4),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 8.76,
-                                  ),
-                                  Column(
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: SizeConfig.blockSizeVertical! * 7),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "Accessibilities Available:",
-                                        style: tPoppinsBold.copyWith(
-                                            color: tBlack4,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                3.5),
-                                      ),
-                                      for (String accessibility
-                                          in enabledLocation['accessibility'])
-                                        Text('• $accessibility',
-                                            style: tPoppinsRegular.copyWith(
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Description: ',
+                                            style: tPoppinsBold.copyWith(
+                                              color: tBlack4,
                                               fontSize: SizeConfig
                                                       .blockSizeHorizontal! *
-                                                  3,
-                                              color: tBlack3,
-                                            )),
+                                                  4,
+                                            ),
+                                          ),
+                                          Text(
+                                            enabledLocation['description'],
+                                            style: tPoppinsRegular.copyWith(
+                                              color: tBlack4,
+                                              fontSize: SizeConfig
+                                                      .blockSizeHorizontal! *
+                                                  4,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 17.3),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Accessibilities:",
+                                            style: tPoppinsBold.copyWith(
+                                              color: tBlack4,
+                                              fontSize: SizeConfig
+                                                      .blockSizeHorizontal! *
+                                                  4,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          if (enabledLocation['accessibility']
+                                              .isEmpty)
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.info,
+                                                  color: tRed,
+                                                  size: SizeConfig
+                                                          .blockSizeHorizontal! *
+                                                      4,
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  'No accessibilities available',
+                                                  style:
+                                                      tPoppinsRegular.copyWith(
+                                                    fontSize: SizeConfig
+                                                            .blockSizeHorizontal! *
+                                                        3.5,
+                                                    color: tBlack3,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          else
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                for (String accessibility
+                                                    in enabledLocation[
+                                                        'accessibility'])
+                                                  Text(
+                                                    '• $accessibility',
+                                                    style: tPoppinsRegular
+                                                        .copyWith(
+                                                      fontSize: SizeConfig
+                                                              .blockSizeHorizontal! *
+                                                          3.5,
+                                                      color: tBlack3,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                          height:
+                                              SizeConfig.blockSizeVertical! *
+                                                  10),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Center(
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageRouteUtils.createSlidePageRoute(MapPage(
-                                        enabledLocation: enabledLocation)),
-                                  );
-                                },
-                                style: TextButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.green,
                                 ),
-                                child: const Text('GET DIRECTIONS'),
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageRouteUtils.createSlidePageRoute(
+                                          MapPage(
+                                              enabledLocation:
+                                                  enabledLocation)),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: SizeConfig.blockSizeHorizontal! * 80,
+                                    height: SizeConfig.blockSizeVertical! * 7,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.directions,
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            'GET DIRECTIONS',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: SizeConfig
+                                                      .blockSizeHorizontal! *
+                                                  4,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -294,25 +356,41 @@ class EnabledLocationDetails extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        PageRouteUtils.createSlidePageRoute(
-                                          ViewReviewsScreen(
-                                              enabledLocation: enabledLocation),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          // Handle View Reviews action
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //       builder: (context) => ReviewsPage()), // Navigate to ReviewsPage
+                                          // );
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.rate_review,
+                                              color: Colors.blue,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal! *
+                                                  4.5,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              'REVIEWS',
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    4.5,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Reviews',
-                                      style: TextStyle(
-                                        fontSize:
-                                            SizeConfig.blockSizeHorizontal! *
-                                                4.5,
-                                        color: Colors.blue,
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
